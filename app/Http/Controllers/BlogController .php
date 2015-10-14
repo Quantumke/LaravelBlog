@@ -6,17 +6,20 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Post;
+use Carbon\Carbon;
+
 class BLogController extends Controller
 {
     //
-    ublic function index()
+    public function index()
     {
         $POSTS = Posts::where ('published_at','<=',Carbon::now)())
             ->orderBy('published_at','desc')
             ->paginate(config('blog.posts_per_page'));
         return view('blog.index',compact('posts'));
     }
-    public function showPOst($slug)
+    public function showPost($slug)
     {
         $post =Post::whereSlug($slug)->firstOrFail();
         return view ('blog.post')->withPost($post);
